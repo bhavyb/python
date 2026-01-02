@@ -38,10 +38,6 @@ class Employee(Person):
         print(f"Employee ID: {self.__employee_id}")
         print(f"Salary: {self.__salary}")
         
-    def __del__(self):
-        return 0
-        # print("Exiting the system. All resources have been freed")
-
 class Manager(Employee):
     def __init__(self, name, age, employee_id, salary, department):
         super().__init__(name, age, employee_id, salary)
@@ -94,7 +90,7 @@ def show_details(person, employee, manager):
         
     elif choice == 3:
         if manager:
-            print("\nManager Deatils:")
+            print("\nManager Details:")
             manager.display()
         else:
             print("\nManager not created.")
@@ -115,7 +111,7 @@ def main():
         print("1. Create a Person")
         print("2. Create an Employee")
         print("3. Create a Manager")
-        print("4. Show Deatils")
+        print("4. Show Details")
         print("5. Exit")
 
         ch = int(input("\nEnter choice: "))
@@ -130,18 +126,18 @@ def main():
             
         elif ch == 3:
             manager = create_manager()
-            print(f"\nManager created with name: {manager.name}, age: {manager.age}, ID: {manager.get_employee_id()}, salary: {manager.get_salary()}, and department: {manager.department}\n")
+            print(f"\nManager created with name: {manager.name}, age: {manager.age}, ID: {manager.get_employee_id()}, salary: {manager.get_salary():.1f}, and department: {manager.department}\n")
             
         elif ch == 4:
             show_details(person, employee, manager)
             
         elif ch == 5:
-            print("\nExiting the system. All resources have been freed")
-            print("\nGoodbye!")
+            print("\nExiting the system. All resources have been freed\n")
+            print("Goodbye!")
             break
         
         else:
-            print("Invalied Choice")
+            print("Invalid Choice")
         
         print("\n--- Choose another operation ---\n")
 
