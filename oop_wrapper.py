@@ -79,19 +79,28 @@ def show_details(person, employee, manager):
     choice = int(input("\nEnter choose: "))
     
     if choice == 1:
-        print("\nPerson Details:")
-        person.display()
+        if person:
+            print("\nPerson Details:")
+            person.display()
+        else:
+            print("\nPerson not created.")
         
     elif choice == 2:
-        print("\nEmployee Details:")
-        employee.display()
+        if employee:
+            print("\nEmployee Details:")
+            employee.display()
+        else:
+            print("\nEmployee not created.")
         
     elif choice == 3:
-        print("\nManager Deatils:")
-        manager.display()
+        if manager:
+            print("\nManager Deatils:")
+            manager.display()
+        else:
+            print("\nManager not created.")
     
     else:
-        print("No object created fro the type\n")
+        print("No object created for the type\n")
         
         
 def main():
