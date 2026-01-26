@@ -1,0 +1,6 @@
+SalesID,Product,Region,Sales,Profit,Year
+101,Product A,North,500,120,2022
+102,Product B,East,600,150,2022
+103,Product C,West,700,200,2022
+104,Product D,South,800,250,2023
+105,Product E,Central,550,180,2023
