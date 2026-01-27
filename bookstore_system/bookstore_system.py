@@ -71,8 +71,8 @@ class Bookstore:
         self.inventory.loc[self.inventory["Title"] == title, "Quantity"] = quantity
         self.inventory.to_csv(INVENTORY_FILE, index=False)
         print("Inventory updated")
-
-    def record_sale(self, title, quantity):
+    
+    def record_sale(self, title, quantity, date):
         if quantity <= 0:
             print("Invalid quantity")
             return
@@ -80,12 +80,23 @@ class Bookstore:
             print("Book not found")
             return
 
+        try:
+            datetime.strptime(date, "%Y-%m-%d")
+        except ValueError:
+            print("Invalid date format. Use YYYY-MM-DD")
+            return
+
         price = self.inventory.loc[self.inventory["Title"] == title, "Price"].values[0]
+
+        if self.inventory.loc[self.inventory["Title"] == title, "Quantity"].values[0] < quantity:
+            print("Not enough stock")
+            return
+
         self.inventory.loc[self.inventory["Title"] == title, "Quantity"] -= quantity
         revenue = price * quantity
 
         sale = {
-            "Date": datetime.now().strftime("%Y-%m-%d"),
+            "Date": date,
             "Title": title,
             "Quantity Sold": quantity,
             "Total Revenue": revenue
@@ -94,7 +105,8 @@ class Bookstore:
         self.sales = pd.concat([self.sales, pd.DataFrame([sale])], ignore_index=True)
         self.inventory.to_csv(INVENTORY_FILE, index=False)
         self.sales.to_csv(SALES_FILE, index=False)
-        print("Sale recorded")
+        print("Sale recorded successfully")
+
 
     def generate_report(self):
         total_revenue = self.sales["Total Revenue"].sum()
@@ -166,9 +178,17 @@ def main():
                 int(input("Quantity: "))
             )
         elif choice == '2':
-            store.update_inventory(input("Title: "), int(input("New Quantity: ")))
+            store.update_inventory(
+                input("Title: "),
+                int(input("New Quantity: "))
+            )
         elif choice == '3':
-            store.record_sale(input("Title: "), int(input("Quantity Sold: ")))
+            store.record_sale(
+                input("Title: "),
+                int(input("Quantity Sold: ")),
+                input("Date (YYYY-MM-DD): ")
+            )
+
         elif choice == '4':
             store.generate_report()
         elif choice == '5':
