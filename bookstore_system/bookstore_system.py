@@ -124,35 +124,45 @@ class Bookstore:
         merged["Date"] = pd.to_datetime(merged["Date"], errors="coerce")
         
         merged["Month"] = merged["Date"].dt.month
+        
+        print("1. Bar Chart\n2. Line Graph\n3. Pie Chart\n4. Heatmp")
+        choice = int(input("Enter choice: "))
 
         # Bar Chart: Sales by Genre
-        plt.figure()
-        sns.barplot(data=merged, x="Genre", y="Total Revenue")
-        plt.title("Total Sales by Genre")
-        plt.show()
+        if choice == 1:
+            plt.figure()
+            sns.barplot(data=merged, x="Genre", y="Total Revenue")
+            plt.title("Total Sales by Genre")
+            plt.show()
 
         # Line Graph: Monthly Sales
-        monthly = merged.groupby("Month")["Total Revenue"].sum()
-        plt.figure()
-        monthly.plot(marker='o')
-        plt.title("Monthly Sales Trend")
-        plt.xlabel("Month")
-        plt.ylabel("Revenue")
-        plt.show()
+        elif choice == 2:
+            monthly = merged.groupby("Month")["Total Revenue"].sum()
+            plt.figure()
+            monthly.plot(marker='o')
+            plt.title("Monthly Sales Trend")
+            plt.xlabel("Month")
+            plt.ylabel("Revenue")
+            plt.show()
 
         # Pie Chart: Revenue Share
-        plt.figure()
-        merged.groupby("Genre")["Total Revenue"].sum().plot(kind='pie', autopct='%1.1f%%')
-        plt.title("Revenue Share by Genre")
-        plt.ylabel("")
-        plt.show()
+        elif choice == 3:
+            plt.figure()
+            merged.groupby("Genre")["Total Revenue"].sum().plot(kind='pie', autopct='%1.1f%%')
+            plt.title("Revenue Share by Genre")
+            plt.ylabel("")
+            plt.show()
 
         # Heatmap: Price vs Quantity Sold
-        plt.figure()
-        corr = merged[["Price", "Quantity Sold"]].corr()
-        sns.heatmap(corr, annot=True, cmap="coolwarm")
-        plt.title("Correlation Heatmap")
-        plt.show()
+        elif choice == 4:
+            plt.figure()
+            corr = merged[["Price", "Quantity Sold"]].corr()
+            sns.heatmap(corr, annot=True, cmap="coolwarm")
+            plt.title("Correlation Heatmap")
+            plt.show()
+        
+        else:
+            print("Invalid choice!")
 
 #  MAIN MENU 
 def main():
@@ -167,9 +177,9 @@ def main():
         print("5. Visualize Data")
         print("6. Exit")
 
-        choice = input("Enter choice: ")
+        choice = int(input("Enter choice: "))
 
-        if choice == '1':
+        if choice == 1:
             store.add_book(
                 input("Title: "),
                 input("Author: "),
@@ -177,23 +187,27 @@ def main():
                 float(input("Price: ")),
                 int(input("Quantity: "))
             )
-        elif choice == '2':
+            
+        elif choice == 2:
             store.update_inventory(
                 input("Title: "),
                 int(input("New Quantity: "))
             )
-        elif choice == '3':
+            
+        elif choice == 3:
             store.record_sale(
                 input("Title: "),
                 int(input("Quantity Sold: ")),
                 input("Date (YYYY-MM-DD): ")
             )
 
-        elif choice == '4':
+        elif choice == 4:
             store.generate_report()
-        elif choice == '5':
+            
+        elif choice == 5:
             store.visualize()
-        elif choice == '6':
+            
+        elif choice == 6:
             print("Exiting system")
             break
         else:
